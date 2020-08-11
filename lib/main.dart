@@ -34,10 +34,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   CalendarController _calendarController;
+  Map<DateTime, List<dynamic>> _events;
+  // List<dynamic> _selectedEvents;
+  // TextEditingController _eventController;
   @override
   void initState() {
     super.initState();
     _calendarController = CalendarController();
+    _events = {};
+    // _selectedEvents = [];
+    // _eventController = TextEditingController();
   }
 
   @override
@@ -45,6 +51,22 @@ class _HomeState extends State<Home> {
     _calendarController.dispose();
     super.dispose();
   }
+
+  // Map<String, dynamic> encodeMap(Map<DateTime, dynamic> map) {
+  //   Map<String, dynamic> newMap = {};
+  //   map.forEach((key, value) {
+  //     newMap[key.toString()] = map[key];
+  //   });
+  //   return newMap;
+  // }
+
+  // Map<DateTime, dynamic> decodeMap(Map<String, dynamic> map) {
+  //   Map<DateTime, dynamic> newMap = {};
+  //   map.forEach((key, value) {
+  //     newMap[DateTime.parse(key)] = map[key];
+  //   });
+  //   return newMap;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +86,7 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             TableCalendar(
               // initialCalendarFormat: CalendarFormat.month,
+              events: _events,
               calendarStyle: CalendarStyle(
                 todayColor: Colors.amber,
                 selectedColor: Theme.of(context).primaryColor,
@@ -82,6 +105,10 @@ class _HomeState extends State<Home> {
                 formatButtonTextStyle: TextStyle(color: Colors.white),
               ),
               startingDayOfWeek: StartingDayOfWeek.sunday,
+              // onDaySelected: (date, events) {
+              //   setState(() {
+              //     _selectedEvents = events;
+              //   });
               builders: CalendarBuilders(
                 selectedDayBuilder: (context, date, events) => Container(
                   margin: EdgeInsets.all(3),
@@ -111,10 +138,44 @@ class _HomeState extends State<Home> {
                 ),
               ),
               calendarController: _calendarController,
-            )
+            ),
+            // ..._selectedEvents.map(
+            //   (event) => ListTile(
+            //     title: Text(event),
+            //  ),
           ],
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: _showAddDialog,
+      // _showAddDialog() {
+      //   showDialog(
+      //     context: context,
+      //     builder: (context) => AlertDialog(
+      //       content: TextField(
+      //         controller: _eventController,
+      //       ),
+      //       actions: <Widget>[
+      //         FlatButton(
+      //         child: Text('Save'),
+      //         onPressed: () {
+      //           if (_eventController.text.isEmpty) return;
+      //           setState(() {
+      //             if (_events[_calendarController.selectedDay] != null){
+      //                 _events[_calendarController.selectedDay].add(_eventController.text);
+      //           } else{
+      //             _events[_calendarController.selectedDay] =
+      //             [_eventController.text];
+      //           }
+      //           _eventController.clear();
+      //           Navigator.pop(context);
+      //           });
+
+      //           }),
+      //     ],
+      //     ),
+      //   );
     );
   }
 }
