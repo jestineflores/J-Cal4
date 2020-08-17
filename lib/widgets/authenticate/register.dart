@@ -41,7 +41,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 18),
                   TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'email',
+                        labelText: 'Email',
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Email' : null,
@@ -51,7 +51,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 18),
                   TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'password',
+                        labelText: 'Password',
                       ),
                       obscureText: true,
                       validator: (value) => value.length < 6

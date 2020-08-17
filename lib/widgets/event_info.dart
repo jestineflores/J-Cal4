@@ -13,12 +13,12 @@ class EventInfo extends StatelessWidget {
         title: Text('Event Location'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(event.title, style: TextStyle(fontSize: 23)),
-            SizedBox(height: 20.0),
+            Text(event.title, style: TextStyle(fontSize: 25)),
+            SizedBox(height: 21),
             Text(event.location)
           ],
         ),
