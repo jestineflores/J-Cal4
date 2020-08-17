@@ -17,7 +17,7 @@ class NewEvent extends StatefulWidget {
 }
 
 class _NewEventState extends State<NewEvent> {
-  TextStyle style = TextStyle(fontFamily: 'Monospace', fontSize: 16);
+  TextStyle style = TextStyle(fontFamily: 'Monospace', fontSize: 18);
   TextEditingController _title;
   TextEditingController _location;
   DateTime _eventDate;
@@ -40,7 +40,7 @@ class _NewEventState extends State<NewEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.event != null ? "Edit Event" : "Add Event"),
+        title: Text('Add Event'),
       ),
       key: _key,
       body: Form(
@@ -51,39 +51,33 @@ class _NewEventState extends State<NewEvent> {
             children: <Widget>[
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
                 child: TextFormField(
                   controller: _title,
-                  validator: (value) =>
-                      (value.isEmpty) ? "Please Enter title" : null,
                   style: style,
                   decoration: InputDecoration(
                       labelText: "Title",
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                          borderRadius: BorderRadius.circular(8))),
                 ),
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
                 child: TextFormField(
                   controller: _location,
-                  minLines: 2,
-                  maxLines: 5,
-                  validator: (value) =>
-                      (value.isEmpty) ? "Enter Location" : null,
                   style: style,
                   decoration: InputDecoration(
-                      labelText: "Location",
+                      labelText: 'Location',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8))),
                 ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: 11),
               ListTile(
-                title: Text("Date (YYYY-MM-DD)"),
+                title: Text('Date'),
                 subtitle: Text(
                     "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}"),
                 onTap: () async {
@@ -99,15 +93,15 @@ class _NewEventState extends State<NewEvent> {
                   }
                 },
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 9),
               processing
                   ? Center(child: CircularProgressIndicator())
                   : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Material(
-                        elevation: 6.0,
-                        borderRadius: BorderRadius.circular(27.0),
-                        color: Theme.of(context).accentColor,
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Theme.of(context).primaryColor,
                         child: MaterialButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
@@ -115,16 +109,17 @@ class _NewEventState extends State<NewEvent> {
                                 processing = true;
                               });
                               if (widget.event != null) {
-                                await eventDBS.updateData(widget.event.id, {
-                                  "title": _title.text,
-                                  "description": _location.text,
-                                  "event_date": widget.event.eventDate
+                                await eventDatabase
+                                    .updateData(widget.event.id, {
+                                  'title': _title.text,
+                                  'location': _location.text,
+                                  'event_date': widget.event.eventDate
                                 });
                               } else {
-                                await eventDBS.createItem(Post(
+                                await eventDatabase.createItem(Post(
                                     title: _title.text,
                                     location: _location.text,
-                                    eventDate: DateTime.now()));
+                                    eventDate: _eventDate));
                               }
                               Navigator.pop(context);
                               setState(() {
@@ -133,7 +128,7 @@ class _NewEventState extends State<NewEvent> {
                             }
                           },
                           child: Text(
-                            "Save",
+                            "Add Event",
                             style: style.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -155,98 +150,3 @@ class _NewEventState extends State<NewEvent> {
     super.dispose();
   }
 }
-// class NewEvent extends StatefulWidget {
-//   final Function addEvent;
-
-//   NewEvent(this.addEvent);
-
-//   @override
-//   _NewEventState createState() => _NewEventState();
-// }
-
-// class _NewEventState extends State<NewEvent> {
-//   final titleController = TextEditingController();
-//   final locationController = TextEditingController();
-//   DateTime ;
-//   DateTime endTime;
-
-//   void submitData() {
-//     final enteredTitle = titleController.text;
-//     final enteredLocation = locationController.text;
-//     final enteredStartTime = selectedDate;
-//     final enteredEndTime = endTime;
-
-//     widget.addEvent(
-//       enteredTitle,
-//       enteredLocation,
-//       enteredStartTime,
-//       enteredEndTime,
-//     );
-
-//     Navigator.of(context).pop();
-//   }
-
-//   void presentDatePicker() {
-//     showDatePicker(
-//       context: context,
-//       initialDate: DateTime.now(),
-//       firstDate: DateTime(2020),
-//       lastDate: DateTime.now(),
-//     ).then((pickedDate) {
-//       if (pickedDate == null) {
-//         return;
-//       }
-//       setState(() {
-//         selectedDate = pickedDate;
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Card(
-//         elevation: 5,
-//         child: Container(
-//           padding: EdgeInsets.all(10),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
-//               TextField(
-//                 controller: titleController,
-//                 onSubmitted: (_) => submitData(),
-//               ),
-//               TextField(
-//                 decoration: InputDecoration(labelText: 'Locatiom'),
-//                 controller: locationController,
-//                 keyboardType: TextInputType.number,
-//                 onSubmitted: (_) => submitData(),
-//               ),
-//               Container(
-//                 height: 70,
-//                 child: Row(children: <Widget>[
-//                   Expanded(
-//                     child: Text(
-//                       'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
-//                     ),
-//                   ),
-//                   FlatButton(
-//                     textColor: Theme.of(context).primaryColor,
-//                     child: Text('Choose Date'),
-//                     onPressed: presentDatePicker,
-//                   )
-//                 ]),
-//               ),
-//               RaisedButton(
-//                 child: Text('Add Event'),
-//                 color: Theme.of(context).primaryColor,
-//                 textColor: Theme.of(context).textTheme.button.color,
-//                 onPressed: submitData,
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
