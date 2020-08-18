@@ -23,7 +23,7 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.purple[300],
         appBar: AppBar(
           backgroundColor: Colors.amber,
-          title: Text('Creat Account', style: TextStyle(color: Colors.white)),
+          title: Text('Create Account', style: TextStyle(color: Colors.white)),
           actions: <Widget>[
             FlatButton.icon(
                 icon: Icon(Icons.person),

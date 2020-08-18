@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.purple[300],
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: Text('Sign into J-Cal', style: TextStyle(color: Colors.white)),
+        title: Text('Sign Into J-Cal', style: TextStyle(color: Colors.white)),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),

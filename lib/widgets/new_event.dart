@@ -9,6 +9,16 @@ import '../models/event.dart';
 
 class NewEvent extends StatefulWidget {
   final Post event;
+  // Future<Null> selectTime(BuildContext context) async {
+  //   picked = await showTimePicker(
+  //     context: context,
+  //     initialTime: _time,
+  //   );
+  //     setState(() {
+  //       _time = picked;
+  //     });
+  //   }
+  // }
 
   const NewEvent({Key key, this.event}) : super(key: key);
 
@@ -21,6 +31,8 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController _title;
   TextEditingController _location;
   DateTime _eventDate;
+  // TimeOfDay _startTime;
+  // TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
@@ -34,6 +46,10 @@ class _NewEventState extends State<NewEvent> {
         text: widget.event != null ? widget.event.location : '');
     _eventDate = DateTime.now();
     processing = false;
+    // _startTime = TimeOfDay.now();
+    // processing = false;
+    // _endTime = TimeOfDay.now();
+    // processing = false;
   }
 
   @override
@@ -79,7 +95,7 @@ class _NewEventState extends State<NewEvent> {
               ListTile(
                 title: Text('Date'),
                 subtitle: Text(
-                    "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}"),
+                    '${_eventDate.month} - ${_eventDate.day} - ${_eventDate.year}'),
                 onTap: () async {
                   DateTime picked = await showDatePicker(
                       context: context,
@@ -94,12 +110,38 @@ class _NewEventState extends State<NewEvent> {
                 },
               ),
               SizedBox(height: 9),
+              // ListTile(
+              //   title: Text('${_startTime.hour}:${_startTime.minute}'),
+              //   onTap: () async {
+              //     TimeOfDay t = await showTimePicker(
+              //         context: context, initialTime: _startTime);
+              //     if (t != null) {
+              //       setState(() {
+              //         _startTime = t;
+              //       });
+              //     }
+              //   },
+              // ),
+              // SizedBox(height: 9),
+              // ListTile(
+              //   title: Text('${_endTime.hour}:${_endTime.minute}'),
+              //   onTap: () async {
+              //     TimeOfDay t = await showTimePicker(
+              //         context: context, initialTime: _endTime);
+              //     if (t != null) {
+              //       setState(() {
+              //         _endTime = t;
+              //       });
+              //     }
+              //   },
+              // ),
+              SizedBox(height: 9),
               processing
                   ? Center(child: CircularProgressIndicator())
                   : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 17),
                       child: Material(
-                        elevation: 5.0,
+                        elevation: 6,
                         borderRadius: BorderRadius.circular(30.0),
                         color: Theme.of(context).primaryColor,
                         child: MaterialButton(
@@ -113,13 +155,18 @@ class _NewEventState extends State<NewEvent> {
                                     .updateData(widget.event.id, {
                                   'title': _title.text,
                                   'location': _location.text,
-                                  'event_date': widget.event.eventDate
+                                  'event_date': widget.event.eventDate,
+                                  // 'start_time': widget.event.startTime,
+                                  // 'end_time': widget.event.endTime,
                                 });
                               } else {
                                 await eventDatabase.createItem(Post(
-                                    title: _title.text,
-                                    location: _location.text,
-                                    eventDate: _eventDate));
+                                  title: _title.text,
+                                  location: _location.text,
+                                  eventDate: _eventDate,
+                                  // startTime: _startTime,
+                                  // endTime: _endTime,
+                                ));
                               }
                               Navigator.pop(context);
                               setState(() {
