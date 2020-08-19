@@ -9,14 +9,10 @@ class Post extends DatabaseItem {
   // final TimeOfDay startTime;
   // final TimeOfDay endTime;
 
-  Post({
-    this.id,
-    this.title,
-    this.location,
-    this.eventDate,
-    // this.startTime,
-    // this.endTime})
-  }) : super(id);
+  Post({this.id, this.title, this.location, this.eventDate})
+      // this.startTime,
+      // this.endTime})
+      : super(id);
 
   factory Post.fromMap(Map data) {
     return Post(
@@ -38,7 +34,6 @@ class Post extends DatabaseItem {
       // endTime: data['end_time']);
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       "title": title,

@@ -39,6 +39,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   CalendarController _controller;
   Map<DateTime, List<dynamic>> _events;
+  // Map<TimeOfDay, List<dynamic>> _startTime;
+  // Map<TimeOfDay, List<dynamic>> _endTime;
   List<dynamic> _selectedEvents;
   final AuthService _auth = AuthService();
   @override
@@ -47,6 +49,8 @@ class _HomeState extends State<Home> {
     _controller = CalendarController();
     _events = {};
     _selectedEvents = [];
+    // _startTime = {};
+    // _endTime = {};
   }
 
   Map<DateTime, List<dynamic>> _groupEvents(List<Post> allEvents) {
@@ -56,6 +60,15 @@ class _HomeState extends State<Home> {
           event.eventDate.year, event.eventDate.month, event.eventDate.day, 12);
       if (data[date] == null) data[date] = [];
       data[date].add(event);
+      //   TimeOfDay time1 =
+      //       TimeOfDay(hour: event.eventDate.hour, minute: event.eventDate.minute);
+      //   if (data[time1] == null) data[time1] = [];
+      //   data[time1].add(_startTime);
+      //   TimeOfDay time2 =
+      //       TimeOfDay(hour: event.endTime.hour, minute: event.endTime.minute);
+      //   if (data[time2] == null) data[time2] = [];
+      //   data[time2].add(_endTime);
+      // });
     });
     return data;
   }
