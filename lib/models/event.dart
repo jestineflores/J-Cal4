@@ -1,5 +1,4 @@
 import 'package:firebase_helpers/firebase_helpers.dart';
-import 'package:flutter/material.dart';
 
 class Post extends DatabaseItem {
   final String id;
@@ -9,10 +8,14 @@ class Post extends DatabaseItem {
   // final TimeOfDay startTime;
   // final TimeOfDay endTime;
 
-  Post({this.id, this.title, this.location, this.eventDate})
-      // this.startTime,
-      // this.endTime})
-      : super(id);
+  Post({
+    this.id,
+    this.title,
+    this.location,
+    this.eventDate,
+    // this.startTime,
+    // this.endTime})
+  }) : super(id);
 
   factory Post.fromMap(Map data) {
     return Post(

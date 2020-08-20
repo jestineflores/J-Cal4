@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.purple[300],
+        backgroundColor: Colors.purple[400],
         appBar: AppBar(
           backgroundColor: Colors.amber,
           title: Text('Create Account', style: TextStyle(color: Colors.white)),
@@ -42,6 +42,10 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Email',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Email' : null,
@@ -52,6 +56,10 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Password',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                       obscureText: true,
                       validator: (value) => value.length < 6

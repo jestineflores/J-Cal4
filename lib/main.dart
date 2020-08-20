@@ -39,8 +39,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   CalendarController _controller;
   Map<DateTime, List<dynamic>> _events;
-  // Map<TimeOfDay, List<dynamic>> _startTime;
-  // Map<TimeOfDay, List<dynamic>> _endTime;
+  Map<TimeOfDay, List<dynamic>> startTime;
+  Map<TimeOfDay, List<dynamic>> endTime;
+  // List<dynamic> _selectedTime1;
+  // List<dynamic> _selectedTime2;
   List<dynamic> _selectedEvents;
   final AuthService _auth = AuthService();
   @override
@@ -49,8 +51,10 @@ class _HomeState extends State<Home> {
     _controller = CalendarController();
     _events = {};
     _selectedEvents = [];
-    // _startTime = {};
-    // _endTime = {};
+    // _selectedTime1 = [];
+    // _selectedTime2 = [];
+    // startTime = {};
+    // endTime = {};
   }
 
   Map<DateTime, List<dynamic>> _groupEvents(List<Post> allEvents) {
@@ -60,18 +64,24 @@ class _HomeState extends State<Home> {
           event.eventDate.year, event.eventDate.month, event.eventDate.day, 12);
       if (data[date] == null) data[date] = [];
       data[date].add(event);
-      //   TimeOfDay time1 =
-      //       TimeOfDay(hour: event.eventDate.hour, minute: event.eventDate.minute);
-      //   if (data[time1] == null) data[time1] = [];
-      //   data[time1].add(_startTime);
-      //   TimeOfDay time2 =
-      //       TimeOfDay(hour: event.endTime.hour, minute: event.endTime.minute);
-      //   if (data[time2] == null) data[time2] = [];
-      //   data[time2].add(_endTime);
-      // });
     });
     return data;
   }
+
+  // Map<TimeOfDay, List<dynamic>> _groupEvents1(List<Post> allEvents) {
+  //   Map<TimeOfDay, List<dynamic>> data = {};
+  //   allEvents.forEach((event) {
+  //     TimeOfDay selectedTime1 =
+  //         TimeOfDay(hour: event.startTime.hour, minute: event.startTime.minute);
+  //     if (data[selectedTime1] == null) data[selectedTime1] = [];
+  //     data[selectedTime1].add(event);
+  //     TimeOfDay selectedTime2 =
+  //         TimeOfDay(hour: event.endTime.hour, minute: event.endTime.minute);
+  //     if (data[selectedTime2] == null) data[selectedTime2] = [];
+  //     data[selectedTime2].add(event);
+  //   });
+  //   return data;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,67 +111,76 @@ class _HomeState extends State<Home> {
               List<Post> allEvents = snapshot.data;
               if (allEvents.isNotEmpty) {
                 _events = _groupEvents(allEvents);
+                // startTime = _groupEvents1(allEvents);
+                // endTime = _groupEvents1(allEvents);
               } else {
                 _events = {};
                 _selectedEvents = [];
+                // _selectedTime1 = [];
+                // _selectedTime2 = [];
+                // startTime = {};
+                // endTime = {};
               }
             }
             return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TableCalendar(
-                    events: _events,
-                    initialCalendarFormat: CalendarFormat.month,
-                    calendarStyle: CalendarStyle(
-                        canEventMarkersOverflow: true,
-                        todayColor: Colors.amber,
-                        selectedColor: Theme.of(context).accentColor,
-                        todayStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                            color: Colors.white)),
-                    headerStyle: HeaderStyle(
-                      centerHeaderTitle: true,
-                      formatButtonDecoration: BoxDecoration(
-                        color: Colors.purple,
-                        borderRadius: BorderRadius.circular(20.0),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TableCalendar(
+                      events: _events,
+                      initialCalendarFormat: CalendarFormat.month,
+                      calendarStyle: CalendarStyle(
+                          canEventMarkersOverflow: true,
+                          todayColor: Colors.amber,
+                          selectedColor: Theme.of(context).accentColor,
+                          todayStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.white)),
+                      headerStyle: HeaderStyle(
+                        centerHeaderTitle: true,
+                        formatButtonDecoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        formatButtonTextStyle: TextStyle(color: Colors.white),
+                        formatButtonShowsNext: false,
                       ),
-                      formatButtonTextStyle: TextStyle(color: Colors.white),
-                      formatButtonShowsNext: false,
+                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      onDaySelected: (date, events) {
+                        setState(() {
+                          _selectedEvents = events;
+                          // _selectedTime1 = startTime as List;
+                          // _selectedTime2 = endTime as List;
+                        });
+                      },
+                      builders: CalendarBuilders(
+                        selectedDayBuilder: (context, date, events) =>
+                            Container(
+                                margin: const EdgeInsets.all(5),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(11)),
+                                child: Text(
+                                  date.day.toString(),
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                        todayDayBuilder: (context, date, events) => Container(
+                            margin: const EdgeInsets.all(5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.purple,
+                                borderRadius: BorderRadius.circular(9)),
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      ),
+                      calendarController: _controller,
                     ),
-                    startingDayOfWeek: StartingDayOfWeek.monday,
-                    onDaySelected: (date, events) {
-                      setState(() {
-                        _selectedEvents = events;
-                      });
-                    },
-                    builders: CalendarBuilders(
-                      selectedDayBuilder: (context, date, events) => Container(
-                          margin: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(11)),
-                          child: Text(
-                            date.day.toString(),
-                            style: TextStyle(color: Colors.white),
-                          )),
-                      todayDayBuilder: (context, date, events) => Container(
-                          margin: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius: BorderRadius.circular(9)),
-                          child: Text(
-                            date.day.toString(),
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                    calendarController: _controller,
-                  ),
-                  ..._selectedEvents.map(
-                    (event) => Card(
+                    ..._selectedEvents.map(
+                      (event) => Card(
                         elevation: 5,
                         child: ListTile(
                           title: Text(event.title),
@@ -173,10 +192,42 @@ class _HomeState extends State<Home> {
                                           event: event,
                                         )));
                           },
-                        )),
-                  ),
-                ],
-              ),
+                        ),
+                      ),
+                    ),
+                    // ..._selectedTime1.map(
+                    //   (event) => Card(
+                    //     elevation: 5,
+                    //     child: ListTile(
+                    //       title: Text(event.startTime),
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (_) => EventInfo(
+                    //                       event: event,
+                    //                     )));
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+                    // ..._selectedTime2.map(
+                    //   (event) => Card(
+                    //     elevation: 5,
+                    //     child: ListTile(
+                    //       title: Text(event.endTime),
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (_) => EventInfo(
+                    //                       event: event,
+                    //                     )));
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+                  ]),
             );
           }),
     );

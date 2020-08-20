@@ -31,8 +31,8 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController _title;
   TextEditingController _location;
   DateTime _eventDate;
-  // TimeOfDay _startTime;
-  // TimeOfDay _endTime;
+  // TimeOfDay startTime;
+  // TimeOfDay endTime;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
@@ -46,9 +46,9 @@ class _NewEventState extends State<NewEvent> {
         text: widget.event != null ? widget.event.location : '');
     _eventDate = DateTime.now();
     processing = false;
-    // _startTime = TimeOfDay.now();
+    // startTime = TimeOfDay.now();
     // processing = false;
-    // _endTime = TimeOfDay.now();
+    // endTime = TimeOfDay.now();
     // processing = false;
   }
 
@@ -109,28 +109,28 @@ class _NewEventState extends State<NewEvent> {
                   }
                 },
               ),
-              SizedBox(height: 9),
+              // SizedBox(height: 9),
               // ListTile(
-              //   title: Text('${_startTime.hour}:${_startTime.minute}'),
+              //   title: Text('${startTime.hour}:${startTime.minute}'),
               //   onTap: () async {
               //     TimeOfDay t = await showTimePicker(
-              //         context: context, initialTime: _startTime);
+              //         context: context, initialTime: startTime);
               //     if (t != null) {
               //       setState(() {
-              //         _startTime = t;
+              //         startTime = t;
               //       });
               //     }
               //   },
               // ),
               // SizedBox(height: 9),
               // ListTile(
-              //   title: Text('${_endTime.hour}:${_endTime.minute}'),
+              //   title: Text('${endTime.hour}:${endTime.minute}'),
               //   onTap: () async {
               //     TimeOfDay t = await showTimePicker(
-              //         context: context, initialTime: _endTime);
+              //         context: context, initialTime: endTime);
               //     if (t != null) {
               //       setState(() {
-              //         _endTime = t;
+              //         endTime = t;
               //       });
               //     }
               //   },
@@ -164,8 +164,8 @@ class _NewEventState extends State<NewEvent> {
                                   title: _title.text,
                                   location: _location.text,
                                   eventDate: _eventDate,
-                                  // startTime: _startTime,
-                                  // endTime: _endTime,
+                                  // startTime: startTime,
+                                  // endTime: endTime,
                                 ));
                               }
                               Navigator.pop(context);

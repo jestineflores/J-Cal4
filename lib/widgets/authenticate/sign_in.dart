@@ -18,7 +18,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[300],
+      backgroundColor: Colors.purple[400],
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: Text('Sign Into J-Cal', style: TextStyle(color: Colors.white)),
@@ -43,7 +43,11 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 18),
               TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'email',
+                    labelText: 'Email',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                   validator: (value) => value.isEmpty ? 'Enter Email' : null,
                   onChanged: (value) {
@@ -52,7 +56,11 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 18),
               TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'password ',
+                    labelText: 'Password ',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                   obscureText: true,
                   validator: (value) => value.length < 6
