@@ -141,12 +141,12 @@ class _HomeState extends State<Home> {
                         centerHeaderTitle: true,
                         formatButtonDecoration: BoxDecoration(
                           color: Colors.purple,
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(17),
                         ),
                         formatButtonTextStyle: TextStyle(color: Colors.white),
                         formatButtonShowsNext: false,
                       ),
-                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      startingDayOfWeek: StartingDayOfWeek.sunday,
                       onDaySelected: (date, events) {
                         setState(() {
                           _selectedEvents = events;
